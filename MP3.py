@@ -25,15 +25,14 @@ word2vec-google-news-300 pretrained embedding model.
 def load_model(model):
     return api.load(model)
 
-def task_one():
-    word2vec_model = load_model('word2vec-google-news-300')
+def task_one_and_two(modelstr, df):
+    word2vec_model = load_model(modelstr)
     #pd.set_option('display.max_rows', 80)
-    df = pd.read_csv("synonyms.csv")
 
     #Creating a dictionary from the words in word2vec_model
-    googleDict = {}
+    dict = {}
     for index, word in enumerate(word2vec_model.index_to_key):
-        googleDict[index] = word
+        dict[index] = word
 
     '''
     Second, use the similarity method from Gensim to compute the cosine 
@@ -41,7 +40,7 @@ def task_one():
     synonym to the questionword.
     '''
     fields = ['Question-word,', 'answer-word,', 'guess-word,', 'result']
-    filename = 'word2vec-google-news-300-details.csv'
+    filename = modelstr + '-details.csv'
     f = open(filename, 'w', newline='')
     writer = csv.writer(f)
     row = fields
@@ -58,7 +57,7 @@ def task_one():
         #check if word exists in the googledict then 
         #get the highest similar word via its 
         #value using the .similarity() function
-        if qWord in googleDict.values() and answer in googleDict.values() and opt0 in googleDict.values() and opt1 in googleDict.values() and opt2 in googleDict.values() and opt3 in googleDict.values():
+        if qWord in dict.values() and answer in dict.values() and opt0 in dict.values() and opt1 in dict.values() and opt2 in dict.values() and opt3 in dict.values():
             most_similar = opt0
             max = word2vec_model.similarity(qWord, opt0)
             temp = word2vec_model.similarity(qWord, opt1)
@@ -98,7 +97,7 @@ def task_one():
     f.close()
 
     #TASK 1 Q2
-    df = pd.read_csv("word2vec-google-news-300-details.csv")
+    df = pd.read_csv(filename)
     #count the nymber of times the model correctly guess the synonym
     correct_guesses = df.loc[df.result == 'correct', 'result'].count()
     #count the nymber of times the model answered incorrectly
@@ -109,12 +108,21 @@ def task_one():
     total_answered = correct_guesses + wrong_guesses
     accuracy = round(correct_guesses / total_answered, 2)
 
-    fields = ['word2vec-google-news-300,', len(googleDict), str(correct_guesses)+',', str(unattempted_guesses)+',', accuracy]
+    fields = [modelstr, len(dict), str(correct_guesses)+',', str(unattempted_guesses)+',', accuracy]
     filename = 'analysis.csv'
-    f = open(filename, 'w', newline='')
+    f = open(filename, 'a', newline='')
     writer = csv.writer(f)
     row = fields
     writer.writerow(row)
     f.close()
 
-task_one()
+f = open('analysis.csv', 'w', newline='')
+df = pd.read_csv("synonyms.csv")
+#Task 1 q1, q2
+task_one_and_two('word2vec-google-news-300', df)
+#Task 2 q1: new models different corpora and same emb size
+task_one_and_two('glove-twitter-100', df)
+task_one_and_two('glove-wiki-gigaword-100', df)
+#Task 2 q2: new models same corpora but dif emb size
+task_one_and_two('glove-twitter-25', df)
+task_one_and_two('glove-twitter-50', df)
