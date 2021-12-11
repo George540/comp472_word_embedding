@@ -18,17 +18,9 @@ The proper functioning of this project requires several installations.
 
 1. Download the code from [github](https://github.com/George540/comp472_mini_project_3)
 2. Open the project in your IDE
-3. Run the file **MP3.py**
-4. You will encounter this menu screen
-```Python
-Welcome to Team Oranges Mini-Assignment 1 for COMP 472
-Please select one of the following options:
-1 - Run Task 1
-2 - Run Task 2
-3 - Run Task 1 and Task 2 back-to-back
-```
-5. You may now select which task or tasks you wish the run
-6. Once a task is chosen, it will run for several seconds. The results will be displayed in the **Results** folder of the project.
+3. Run the file **MP3.py** . You will have to wait until all models are processed. Once complete, you will see a graph.
+
+Note: the console will have a loading bar for each model as well
 
 ## Contributing
 Pull requests will only be permitted by COMP 472 TAs as this is a private project.
