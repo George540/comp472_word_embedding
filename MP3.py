@@ -119,25 +119,31 @@ def task_one_and_two(modelstr, df):
 
 
 print('--------------------------Welcome To MP3--------------------------')
-print('                          By Team ORANGES                          ')
-''''
+print('                          by Team ORANGES                          ')
+
 f = open('analysis.csv', 'w', newline='')
+f.write('model-name,size-of-vocab,number-of-correct-labels,answers-without-guessing,accuracy')
 df = pd.read_csv("synonyms.csv")
+
+
 #Task 1 q1, q2
 task_one_and_two('word2vec-google-news-300', df)
+
 #Task 2 q1: new models different corpora and same emb size
 task_one_and_two('glove-twitter-100', df)
 task_one_and_two('glove-wiki-gigaword-100', df)
+
 #Task 2 q2: new models same corpora but dif emb size
 task_one_and_two('glove-twitter-25', df)
 task_one_and_two('glove-twitter-50', df)
-'''
 
-#graphing
+#Graphing Results and Analysis
 df = pd.read_csv('analysis.csv')
 temp = {'model-name': 'human-gold-standard', 'accuracy': 0.8557}
 df = df.append(temp, ignore_index=True)
-print(df)
+baseline = df["accuracy"].mean()
+temp = {'model-name': 'random-baseline', 'accuracy': baseline}
+df = df.append(temp, ignore_index=True)
 df.plot(kind='bar' , x='model-name', y='accuracy')
 plt.tight_layout()
 plt.savefig("accuracy.pdf", dpi = 100)
