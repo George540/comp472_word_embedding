@@ -12,6 +12,7 @@ The output are vectors, one vector per word, with remarkable linear relationship
 vec(“king”) - vec(“man”) + vec(“woman”) =~ vec(“queen”)
 vec(“Montreal Canadiens”) – vec(“Montreal”) + vec(“Toronto”) =~ vec(“Toronto Maple Leafs”).
 '''
+import matplotlib.pyplot as plt
 import gensim.downloader as api
 import pandas as pd
 import csv
@@ -116,6 +117,10 @@ def task_one_and_two(modelstr, df):
     writer.writerow(row)
     f.close()
 
+
+print('--------------------------Welcome To MP3--------------------------')
+print('                          By Team ORANGES                          ')
+''''
 f = open('analysis.csv', 'w', newline='')
 df = pd.read_csv("synonyms.csv")
 #Task 1 q1, q2
@@ -126,3 +131,13 @@ task_one_and_two('glove-wiki-gigaword-100', df)
 #Task 2 q2: new models same corpora but dif emb size
 task_one_and_two('glove-twitter-25', df)
 task_one_and_two('glove-twitter-50', df)
+'''
+
+#graphing
+df = pd.read_csv('analysis.csv')
+temp = {'model-name': 'human-gold-standard', 'accuracy': 0.8557}
+df = df.append(temp, ignore_index=True)
+print(df)
+df.plot(kind='bar' , x='model-name', y='accuracy')
+plt.tight_layout()
+plt.savefig("accuracy.pdf", dpi = 100)
