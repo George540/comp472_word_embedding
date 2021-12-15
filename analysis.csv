@@ -1,6 +1,4 @@
-model-name,size-of-vocab,number-of-correct-labels,answers-without-guessing,accuracy
-word2vec-google-news-300,3000000,"70,","1,",0.89
-glove-twitter-100,1193514,"36,","11,",0.52
-glove-wiki-gigaword-100,400000,"64,","2,",0.82
-glove-twitter-25,1193514,"33,","11,",0.48
-glove-twitter-50,1193514,"35,","11,",0.51
+model-name,size-of-vocab,number-of-correct-labels,answers-without-guessing,accuracy,0
+glove-wiki-gigaword-100,400000,"0,","20,",0
+glove-twitter-25,1193514,"0,","20,",0
+glove-twitter-50,1193514,"0,","20,",0

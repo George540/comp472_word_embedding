@@ -47,7 +47,7 @@ def task_one_and_two(modelstr, df):
     row = fields
     writer.writerow(row)
 
-    for i in range(0 , 80):
+    for i in range(0 , 20):
         #get cell in specified columns to fill the variables below
         qWord = df.at[i, 'question']
         answer = df.at[i, 'answer']
@@ -105,9 +105,12 @@ def task_one_and_two(modelstr, df):
     wrong_guesses = df.loc[df.result == 'wrong', 'result'].count()
     #count the nymber of times the model answered without guessing
     unattempted_guesses = df.loc[df.result == 'guess', 'result'].count() 
-
+    
     total_answered = correct_guesses + wrong_guesses
-    accuracy = round(correct_guesses / total_answered, 2)
+    if(total_answered == 0):
+        accuracy = 0
+    else: 
+        accuracy = round(correct_guesses / total_answered, 2)
 
     fields = [modelstr, len(dict), str(correct_guesses)+',', str(unattempted_guesses)+',', accuracy]
     filename = 'analysis.csv'
@@ -123,7 +126,7 @@ print('                          by Team ORANGES                          ')
 
 f = open('analysis.csv', 'w', newline='')
 f.write('model-name,size-of-vocab,number-of-correct-labels,answers-without-guessing,accuracy')
-df = pd.read_csv("synonyms.csv")
+df = pd.read_csv("sample_40.csv")
 
 
 #Task 1 q1, q2
